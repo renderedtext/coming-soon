@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'sinatra'
+gem 'rack'
 gem 'activerecord', '3.0.0'
 gem 'fastercsv'
 

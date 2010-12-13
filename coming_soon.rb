@@ -58,11 +58,13 @@ class ComingSoon < Sinatra::Base
   end
 
   get '/backstage' do
+    protected!
     @user_count = User.count
     erb :backstage
   end
 
   get '/backstage/csv' do
+    protected!
     csv_content = FasterCSV.generate do |csv|
       User.find_each do |user|
         csv << [user.email]
@@ -94,6 +96,23 @@ class ComingSoon < Sinatra::Base
 
     def pluralize(count, singular, plural = nil)
       "#{count || 0} " + ((count == 1 || count =~ /^1(\.0+)?$/) ? singular : (plural || singular.pluralize))
+    end
+
+    def testing?
+      ENV['RACK_ENV'] == "test"
+    end
+
+    def protected!
+      unless authorized?
+        response['WWW-Authenticate'] = %(Basic realm="Authentication Required")
+        throw(:halt, [401, "Not authorized\n"])
+      end
+    end
+
+    def authorized?
+      return true if testing?
+      @auth ||=  Rack::Auth::Basic::Request.new(request.env)
+      @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == [APP_CONFIG["admin_username"], APP_CONFIG["admin_password"]]
     end
   end
 end
