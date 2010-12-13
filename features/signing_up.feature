@@ -23,3 +23,13 @@ I should be able to provide my email and leave safe
     And I fill in "email" with "ty.coonhotmail.com"
     And I press "Notify me"
     Then I should see "odd"
+
+  Scenario: Entering same email twice
+    Given there are no emails
+    When I go to the home page
+    And I fill in "email" with "ty.coon@hotmail.com"
+    And I press "Notify me"
+    And I go to the home page
+    And I fill in "email" with "ty.coon@hotmail.com"
+    And I press "Notify me"
+    Then I should see "already on the list"

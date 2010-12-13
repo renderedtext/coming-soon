@@ -27,6 +27,7 @@ class ComingSoon < Sinatra::Base
 
   class User < ActiveRecord::Base
     validates_presence_of :email
+    validates_uniqueness_of :email
     validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
   end
 
@@ -40,9 +41,15 @@ class ComingSoon < Sinatra::Base
   end
 
   post '/create' do
+    redirect "/?m=email_blank" if params[:email].blank?
+
+    if User.count(:conditions => { :email => params[:email] }) > 0
+      redirect "/?m=email_taken"
+    end
+
     @user = User.new(:email => params[:email],
                      :referer  => params[:referer])
-    if @user.valid?
+    if @user.save
       redirect "/?m=success"
     else
       redirect "/?m=email_invalid"
@@ -57,6 +64,8 @@ class ComingSoon < Sinatra::Base
       case message
       when "email_blank"
         @notice = "But there is no point if you don't tell us your email."
+      when "email_taken"
+        @notice = "You're already on the list! Thanks for double-interest."
       when "email_invalid"
         @notice = "The format of the email seems odd. "
       when "success"

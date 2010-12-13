@@ -22,6 +22,7 @@ GEM
       term-ansicolor (~> 1.0.4)
     cucumber-sinatra (0.3.0)
       templater (>= 1.0.0)
+    database_cleaner (0.5.2)
     diff-lcs (1.1.2)
     extlib (0.9.15)
     gherkin (2.1.5)
@@ -47,4 +48,5 @@ DEPENDENCIES
   activerecord (= 3.0.0)
   cucumber
   cucumber-sinatra
+  database_cleaner
   sinatra
