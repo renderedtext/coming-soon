@@ -26,6 +26,8 @@ class ComingSoon < Sinatra::Base
   end
 
   class User < ActiveRecord::Base
+    validates_presence_of :email
+    validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
   end
 
   before do
@@ -38,7 +40,13 @@ class ComingSoon < Sinatra::Base
   end
 
   post '/create' do
-    redirect "/?m=success"
+    @user = User.new(:email => params[:email],
+                     :referer  => params[:referer])
+    if @user.valid?
+      redirect "/?m=success"
+    else
+      redirect "/?m=email_invalid"
+    end
   end
 
   ##
