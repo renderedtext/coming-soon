@@ -1,0 +1,9 @@
+h1. coming-soon
+
+A Sinatra application to show's a pre-launch page with ability to collect users' email addresses.
+
+h2. Development
+
+@gem install shotgun@
+
+@shotgun config.ru@
