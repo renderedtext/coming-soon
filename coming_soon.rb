@@ -1,13 +1,31 @@
 require 'sinatra/base'
+require 'active_record'
+
+
+def load_configuration(file, name)
+  if !File.exist?(file)
+    puts "There's no configuration file at #{file}!"
+    exit!
+  end
+  const_set(name, YAML.load_file(file))
+end
 
 class ComingSoon < Sinatra::Base
 
   configure do
-    if !File.exist?('config.yml')
-      puts "There's no configuration file at config.yml!"
-      exit!
-    end
-    APP_CONFIG = YAML.load_file('config.yml')
+    load_configuration("config.yml", "APP_CONFIG")
+    load_configuration("database.yml", "DB_CONFIG")
+
+    ActiveRecord::Base.establish_connection(
+      :adapter  => DB_CONFIG['adapter'],
+      :host     => DB_CONFIG['host'],
+      :username => DB_CONFIG['username'],
+      :password => DB_CONFIG['password'],
+      :database => DB_CONFIG['name']
+    )
+  end
+
+  class User < ActiveRecord::Base
   end
 
   before do
@@ -15,6 +33,28 @@ class ComingSoon < Sinatra::Base
   end
 
   get '/' do
+    flash_message(params[:m])
     erb :index
+  end
+
+  post '/create' do
+    redirect "/?m=success"
+  end
+
+  ##
+
+  helpers do
+
+    def flash_message(message)
+      case message
+      when "email_blank"
+        @notice = "But there is no point if you don't tell us your email."
+      when "email_invalid"
+        @notice = "The format of the email seems odd. "
+      when "success"
+        @success = "Thank you! We promise a nice surprise soon."
+      else ""
+      end
+    end
   end
 end
