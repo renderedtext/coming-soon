@@ -6,3 +6,20 @@ I should be able to provide my email and leave safe
   Scenario: Opening the home page
     When I go to the home page
     Then I should see "Enter your email address"
+
+  Scenario: Providing an email
+    When I go to the home page
+    And I fill in "email" with "ty.coon@hotmail.com"
+    And I press "Notify me"
+    Then I should see "Thank you"
+
+  Scenario: Entering blank email
+    When I go to the home page
+    And I press "Notify me"
+    Then I should see "no point"
+
+  Scenario: Entering invalid email
+    When I go to the home page
+    And I fill in "email" with "ty.coonhotmail.com"
+    And I press "Notify me"
+    Then I should see "odd"
