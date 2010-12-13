@@ -1,9 +1,37 @@
 h1. coming-soon
 
-A Sinatra application to show's a pre-launch page with ability to collect users' email addresses.
+"Sinatra":http://www.sinatrarb.com/ application to show a pre-launch page and collect emails. Includes an admin view and CSV export. Partially inspired by "beta-signup":https://github.com/steveodom/beta-signup.
 
-h2. Development
+h2. Set up
 
-@gem install shotgun@
+# Create @config.yml@ and @database.yml@ from the example files
+# Create your database
+# Run @rake db:migrate@
 
-@shotgun config.ru@
+Now you're ready to:
+
+<pre><code>rackup</code></pre>
+
+And open "localhost:9292":http://localhost:9292.
+
+h2. Contribute
+
+If you'd like to hack on the app, it's better to use "shotgun":https://github.com/rtomayko/shotgun/ as a local server as it will automatically reload code changes.
+
+Use "Bundler":http://gembundler.com to install the dependencies:
+
+<pre><code>bundle install</code></pre>
+
+Here's how it goes:
+
+# Clone your fork of https://github.com/renderedtext/coming-soon
+# Create a thoughtfully named topic branch to contain your change
+# Hack away
+# Add tests and make sure everything still passes by running @cucumber@
+# If necessary, rebase your commits into logical chunks, without errors
+# Push the branch up to GitHub
+# Send a pull request for your branch
+
+h2. License
+
+coming-soon is licensed under the MIT License.
