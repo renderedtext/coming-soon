@@ -56,6 +56,11 @@ class ComingSoon < Sinatra::Base
     end
   end
 
+  get '/backstage' do
+    @user_count = User.count
+    erb :backstage
+  end
+
   ##
 
   helpers do
@@ -65,13 +70,17 @@ class ComingSoon < Sinatra::Base
       when "email_blank"
         @notice = "But there is no point if you don't tell us your email."
       when "email_taken"
-        @notice = "You're already on the list! Thanks for double-interest."
+        @notice = "You're already on the list! Thanks for double interest."
       when "email_invalid"
-        @notice = "The format of the email seems odd. "
+        @notice = "The format of the email seems odd."
       when "success"
         @success = "Thank you! We promise a nice surprise soon."
       else ""
       end
+    end
+
+    def pluralize(count, singular, plural = nil)
+      "#{count || 0} " + ((count == 1 || count =~ /^1(\.0+)?$/) ? singular : (plural || singular.pluralize))
     end
   end
 end
