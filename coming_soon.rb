@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'active_record'
+require 'fastercsv'
 
 
 def load_configuration(file, name)
@@ -59,6 +60,18 @@ class ComingSoon < Sinatra::Base
   get '/backstage' do
     @user_count = User.count
     erb :backstage
+  end
+
+  get '/backstage/csv' do
+    csv_content = FasterCSV.generate do |csv|
+      User.find_each do |user|
+        csv << [user.email]
+      end
+    end
+
+    headers "Content-Disposition" => "attachment;filename=emails.csv",
+            "Content-Type" => "text/csv"
+    csv_content
   end
 
   ##
