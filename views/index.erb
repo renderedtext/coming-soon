@@ -1,0 +1,13 @@
+<h1>Welcome to <%= @app_name %></h1>
+
+<h2>Let us know that you want us to let you know!</h2>
+
+<form action='/create' method='post'>
+  <div>
+    <label for='email'>Enter your email address</label>
+    <input type='text' name='email' /><br />
+  </div>
+
+  <input type='submit' name='submit' value='Notify me' />
+  <input type='hidden' name='referer' value='<%= request.env["HTTP_REFERER"] %>'>
+</form>

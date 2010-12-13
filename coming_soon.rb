@@ -10,7 +10,11 @@ class ComingSoon < Sinatra::Base
     APP_CONFIG = YAML.load_file('config.yml')
   end
 
+  before do
+    @app_name = APP_CONFIG['app_name']
+  end
+
   get '/' do
-    "Hello #{APP_CONFIG['app_name']}!"
+    erb :index
   end
 end
