@@ -6,14 +6,13 @@ require File.join(File.dirname(__FILE__), '..', '..', 'coming_soon.rb')
 
 require 'capybara'
 require 'capybara/cucumber'
-require 'spec'
 
 Capybara.app = ComingSoon
 
 class ComingSoonWorld
   include Capybara
-  include Spec::Expectations
-  include Spec::Matchers
+  include RSpec::Expectations
+  include RSpec::Matchers
 end
 
 World do

@@ -1,3 +1,5 @@
 *.swp
 config.yml
 database.yml
+.bundle
+vendor/bundle/
