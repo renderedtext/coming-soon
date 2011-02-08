@@ -2,6 +2,16 @@ require 'sinatra/base'
 require 'active_record'
 require 'fastercsv'
 
+require 'csv'
+if CSV.const_defined? :Reader
+  # Ruby 1.8
+  require 'fastercsv'
+  CSVKLASS = FasterCSV
+else
+  # Ruby 1.9, FasterCSV merged in stdlib
+  CSVKLASS = CSV
+end
+
 
 def load_configuration(file, name)
   if !File.exist?(file)
