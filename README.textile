@@ -4,6 +4,7 @@ h1. coming-soon
 
 h2. Set up
 
+# @bundle install@
 # Create @config.yml@ and @database.yml@ from the example files
 # Create your database
 # Run @rake db:migrate@
@@ -14,20 +15,14 @@ Now you're ready to:
 
 And open "localhost:9292":http://localhost:9292.
 
-h2. Contribute
+Although to hack on the app, we recommend using "shotgun":https://github.com/rtomayko/shotgun/ as a local server, as it will automatically reload code changes.
 
-If you'd like to hack on the app, it's better to use "shotgun":https://github.com/rtomayko/shotgun/ as a local server as it will automatically reload code changes.
-
-Use "Bundler":http://gembundler.com to install the dependencies:
-
-<pre><code>bundle install</code></pre>
-
-Here's how it goes:
+h2. How to contribute
 
 # Clone your fork of https://github.com/renderedtext/coming-soon
 # Create a thoughtfully named topic branch to contain your change
 # Hack away
-# Add tests and make sure everything still passes by running @cucumber@
+# Add tests and make sure everything still passes by running @bundle exec cucumber@
 # If necessary, rebase your commits into logical chunks, without errors
 # Push the branch up to GitHub
 # Send a pull request for your branch
