@@ -60,6 +60,7 @@ class ComingSoon < Sinatra::Base
   get '/backstage' do
     protected!
     @user_count = User.count
+    @users = User.all
     erb :backstage
   end
 
