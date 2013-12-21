@@ -29,7 +29,7 @@ class ComingSoon < Sinatra::Base
   class User < ActiveRecord::Base
     validates_presence_of :email
     validates_uniqueness_of :email
-    validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
+    validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   end
 
   before do
@@ -44,7 +44,7 @@ class ComingSoon < Sinatra::Base
   post '/create' do
     redirect "/?m=email_blank" if params[:email].blank?
 
-    if User.count(:conditions => { :email => params[:email] }) > 0
+    if User.where(:email => params[:email]).count > 0
       redirect "/?m=email_taken"
     end
 
