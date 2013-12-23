@@ -1,17 +1,7 @@
 require 'sinatra/base'
 require 'active_record'
-require 'fastercsv'
 
 require 'csv'
-if CSV.const_defined? :Reader
-  # Ruby 1.8
-  require 'fastercsv'
-  CSVKLASS = FasterCSV
-else
-  # Ruby 1.9, FasterCSV merged in stdlib
-  CSVKLASS = CSV
-end
-
 
 def load_configuration(file, name)
   if !File.exist?(file)
@@ -39,7 +29,7 @@ class ComingSoon < Sinatra::Base
   class User < ActiveRecord::Base
     validates_presence_of :email
     validates_uniqueness_of :email
-    validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
+    validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   end
 
   before do
@@ -54,7 +44,7 @@ class ComingSoon < Sinatra::Base
   post '/create' do
     redirect "/?m=email_blank" if params[:email].blank?
 
-    if User.count(:conditions => { :email => params[:email] }) > 0
+    if User.where(:email => params[:email]).count > 0
       redirect "/?m=email_taken"
     end
 
@@ -70,12 +60,13 @@ class ComingSoon < Sinatra::Base
   get '/backstage' do
     protected!
     @user_count = User.count
+    @users = User.all
     erb :backstage
   end
 
   get '/backstage/csv' do
     protected!
-    csv_content = FasterCSV.generate do |csv|
+    csv_content = CSV.generate do |csv|
       User.find_each do |user|
         csv << [user.email]
       end

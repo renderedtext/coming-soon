@@ -1,5 +1,16 @@
 <h1><%= @app_name %> backstage</h1>
 
 <h2><%= pluralize(@user_count, "person", "people") %> signed up.</h2>
-
+<table cellspacing="3">
+  <tr>
+    <th>#</th>
+    <th>email</th>
+  </tr>
+  <% @users.each do |user| %>
+  <tr>
+    <td><%= user.id %></td>
+    <td><%= user.email %></td>
+  </tr>
+  <% end %>
+</table>
 <a href="/backstage/csv">Download emails in a CSV file</a>

@@ -2,8 +2,7 @@ source 'http://rubygems.org'
 
 gem 'sinatra'
 gem 'rack'
-gem 'activerecord', '3.0.3'
-gem 'fastercsv'
+gem 'activerecord', '4.0.2'
 
 group :test do
   gem 'database_cleaner'
@@ -11,4 +10,9 @@ group :test do
   gem 'rspec'
   gem 'cucumber-sinatra'
   gem 'cucumber'
+end
+
+group :development do
+  gem 'sqlite3'
+  gem 'shotgun'
 end
