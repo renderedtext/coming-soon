@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 
+gem 'rake'
 gem 'sinatra'
 gem 'rack'
 gem 'activerecord', '4.0.2'
