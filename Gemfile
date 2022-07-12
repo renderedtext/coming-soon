@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'sinatra'
 gem 'rack'
-gem 'activerecord', '4.0.2'
+gem 'activerecord', '5.2.8.1'
 
 group :test do
   gem 'database_cleaner'
